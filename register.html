@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FoodBridge | Register</title>
+
+    <link rel="stylesheet" href="css/register.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<section class="register-page">
+
+    <div class="overlay"></div>
+
+    <div class="register-card">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+
+                <i class="fa-solid fa-hand-holding-heart"></i>
+
+            </div>
+
+            <h2>FoodBridge</h2>
+
+            <p>Connecting Food With Hope</p>
+
+        </div>
+
+        <form id="registerForm">
+
+            <div class="input-box">
+
+                <i class="fa-solid fa-user"></i>
+
+                <input
+                    type="text"
+                    placeholder="Full Name"
+                    required>
+
+            </div>
+
+            <div class="input-box">
+
+                <i class="fa-solid fa-envelope"></i>
+
+                <input
+                    type="email"
+                    placeholder="Email Address"
+                    required>
+
+            </div>
+
+            <div class="input-box">
+
+                <i class="fa-solid fa-phone"></i>
+
+                <input
+                    type="tel"
+                    placeholder="Phone Number"
+                    required>
+
+            </div>
+
+            <div class="input-box">
+
+                <i class="fa-solid fa-lock"></i>
+
+                <input
+                    type="password"
+                    id="registerPassword"
+                    placeholder="Create Password"
+                    required>
+
+                <span class="toggle-password">
+
+                    <i class="fa-solid fa-eye"></i>
+
+                </span>
+
+            </div>
+
+            <div class="input-box">
+
+                <i class="fa-solid fa-lock"></i>
+
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Confirm Password"
+                    required>
+
+                <span class="toggle-password">
+
+                    <i class="fa-solid fa-eye"></i>
+
+                </span>
+
+            </div>
+
+            <!-- Role Selection Start -->
+<div class="role-box">
+
+    <h4>Select Your Role</h4>
+
+    <div class="role-cards">
+
+        <label class="role-card">
+
+            <input
+                type="radio"
+                name="role"
+                value="donor"
+                required>
+
+            <i class="fa-solid fa-hand-holding-heart"></i>
+
+            <span>Donor</span>
+
+        </label>
+
+        <label class="role-card">
+
+            <input
+                type="radio"
+                name="role"
+                value="volunteer">
+
+            <i class="fa-solid fa-user-group"></i>
+
+            <span>Volunteer</span>
+
+        </label>
+
+    </div>
+
+</div>
+
+            <!-- Role Selection End -->
+
+            <div class="terms">
+
+                <label>
+
+                    <input type="checkbox" required>
+
+                    I agree to the
+
+                    <a href="#">Terms & Conditions</a>
+
+                </label>
+
+            </div>
+
+            <button type="submit" class="register-btn">
+
+                Create Account
+
+            </button>
+
+            <div class="bottom-links">
+
+                <p>
+
+                    Already have an account?
+
+                    <a href="login.html">
+
+                        Login
+
+                    </a>
+
+                </p>
+
+            </div>
+
+            <div class="back-home">
+
+                <a href="index.html">
+
+                    <i class="fa-solid fa-arrow-left"></i>
+
+                    Back to Home
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+<script src="js/register.js"></script>
+
+</body>
+
+</html>

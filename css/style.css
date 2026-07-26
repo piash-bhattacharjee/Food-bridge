@@ -286,6 +286,9 @@ header{
 .login-btn{
 
     padding:12px 26px;
+    display:inline-flex;
+    justify-content:center;
+    align-items:center;
 
     border:none;
 
@@ -316,6 +319,9 @@ header{
 .register-btn{
 
     padding:12px 26px;
+    display:inline-flex;
+    justify-content:center;
+    align-items:center;
 
     border:none;
 
@@ -336,6 +342,24 @@ header{
     background:#ff7700;
 
     transform:translateY(-4px);
+
+}
+.nav-buttons a{
+
+    text-decoration: none;
+
+    display: inline-block;
+
+    text-align: center;
+
+}
+
+.login-btn,
+.register-btn{
+
+    text-decoration: none;
+
+    cursor: pointer;
 
 }
 /* ===========================================
@@ -1896,3 +1920,4 @@ section{
     scroll-margin-top:120px;
 
 }
+/* ===========================================
