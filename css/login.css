@@ -31,7 +31,7 @@ body{
     justify-content:center;
     align-items:center;
     padding:40px;
-    background:url("/hero.png") center center/cover no-repeat;
+    background:url("../assets/images/hero.png") center center/cover no-repeat;
 }
 
 .overlay{
@@ -327,45 +327,4 @@ padding-right:55px;
 
     }
 
-}
-/* ================================
-   REACT LOGIN PAGE FIX
-================================ */
-
-
-
-
-.login-page {
-    width: 100% !important;
-    min-height: 100vh !important;
-    margin: 0 !important;
-    padding: 40px !important;
-
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-
-    position: relative !important;
-
-    background-image: url("/hero.png") !important;
-    background-position: center center !important;
-    background-size: cover !important;
-    background-repeat: no-repeat !important;
-}
-.login-page .logo {
-    display: block !important;
-    text-align: center !important;
-}
-
-.login-page .logo-icon {
-    display: flex !important;
-    margin: 0 auto 20px !important;
-}
-
-.login-page .logo h2 {
-    display: block !important;
-}
-
-.login-page .logo p {
-    display: block !important;
 }

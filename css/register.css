@@ -35,7 +35,7 @@ body{
 
     padding:40px;
 
-    background:url("/hero.png")
+    background:url("../assets/images/hero.png")
     center center/cover no-repeat;
 
 }
