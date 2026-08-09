@@ -469,3 +469,42 @@ body{
 }
 
 }
+/* ================================
+   REACT REGISTER PAGE FIX
+================================ */
+
+
+.register-page {
+    width: 100% !important;
+    min-height: 100vh !important;
+    margin: 0 !important;
+    padding: 40px !important;
+
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+
+    position: relative !important;
+
+    background-image: url("/hero.png") !important;
+    background-position: center center !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+}
+.register-page .logo {
+    display: block !important;
+    text-align: center !important;
+}
+
+.register-page .logo-icon {
+    display: flex !important;
+    margin: 0 auto 20px !important;
+}
+
+.register-page .logo h2 {
+    display: block !important;
+}
+
+.register-page .logo p {
+    display: block !important;
+}
