@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import API from "../api";
 
 function FoodDonations() {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ function FoodDonations() {
 
     try {
       const token = localStorage.getItem("foodbridgeToken");
-      const response = await fetch("http://localhost:5000/api/donations", {
+      const response = await fetch(`${API}/api/donations`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

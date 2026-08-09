@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import API from "../api";
 
 function AvailableDonations() {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ function AvailableDonations() {
   const fetchAvailable = async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/donations/available");
+      const res = await fetch(`${API}/api/donations/available`);
       const data = await res.json();
       setDonations(data);
     } catch (err) {
@@ -41,7 +42,7 @@ function AvailableDonations() {
 
     try {
       const token = localStorage.getItem("foodbridgeToken");
-      const res = await fetch(`http://localhost:5000/api/donations/${id}/claim`, {
+      const res = await fetch(`${API}/api/donations/${id}/claim`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

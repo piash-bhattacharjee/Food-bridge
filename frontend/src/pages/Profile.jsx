@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import API from "../api";
 
 function Profile() {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ function Profile() {
     setLoading(true);
     try {
       const token = localStorage.getItem("foodbridgeToken");
-      const res = await fetch("http://localhost:5000/api/auth/profile", {
+        const res = await fetch(`${API}/api/auth/profile`, {
         method: "PUT",
         headers: { "Content-Type": "application/json", ...(token ? { Authorization: `Bearer ${token}` } : {}) },
         body: JSON.stringify({ name, phone }),

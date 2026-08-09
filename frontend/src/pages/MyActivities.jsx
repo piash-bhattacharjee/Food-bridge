@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import API from "../api";
 
 function MyActivities() {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ function MyActivities() {
     setLoading(true);
     try {
       const token = localStorage.getItem("foodbridgeToken");
-      const res = await fetch(`http://localhost:5000/api/donations/user/${encodeURIComponent(user.email)}`, { headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) } });
+      const res = await fetch(`${API}/api/donations/user/${encodeURIComponent(user.email)}`, { headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) } });
       const data = await res.json();
       setDonations(data);
     } catch (err) {
@@ -37,7 +38,7 @@ function MyActivities() {
     if (!confirm("Delete this donation?")) return;
     try {
       const token = localStorage.getItem("foodbridgeToken");
-      const res = await fetch(`http://localhost:5000/api/donations/${id}`, { method: "DELETE", headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) } });
+      const res = await fetch(`${API}/api/donations/${id}`, { method: "DELETE", headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) } });
       if (!res.ok) throw new Error("Delete failed");
       setDonations((d) => d.filter((x) => x._id !== id));
     } catch (err) {
@@ -65,7 +66,7 @@ function MyActivities() {
   const saveEdit = async (id) => {
     try {
       const token = localStorage.getItem("foodbridgeToken");
-      const res = await fetch(`http://localhost:5000/api/donations/${id}`, {
+      const res = await fetch(`${API}/api/donations/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json", ...(token ? { Authorization: `Bearer ${token}` } : {}) },
         body: JSON.stringify(editValues),
