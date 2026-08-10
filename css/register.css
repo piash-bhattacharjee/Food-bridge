@@ -25,19 +25,13 @@ body{
 =========================================== */
 
 .register-page{
-
     position:relative;
     min-height:100vh;
-
     display:flex;
     justify-content:center;
     align-items:center;
-
     padding:40px;
-
-    background:url("../assets/images/hero.png")
-    center center/cover no-repeat;
-
+    background:url("/assets/images/hero.png") center center/cover no-repeat fixed;
 }
 
 .overlay{

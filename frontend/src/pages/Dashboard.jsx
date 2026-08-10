@@ -1,12 +1,9 @@
-import { useEffect } from "react";
+﻿import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const navigate = useNavigate();
-
-  const user = JSON.parse(
-    localStorage.getItem("foodbridgeUser")
-  );
+  const user = JSON.parse(localStorage.getItem("foodbridgeUser"));
 
   useEffect(() => {
     if (!user) {
@@ -14,224 +11,208 @@ function Dashboard() {
     }
   }, [navigate, user]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("foodbridgeUser");
-    localStorage.removeItem("foodbridgeToken");
-    navigate("/login");
-  };
-
   if (!user) {
     return null;
   }
 
-  const donorCards = [
+  const navItems = [
     {
-      title: "Donate Food",
-      description: "Share surplus food with people in need.",
-      action: () => navigate("/food-donations"),
+      label: "Dashboard",
+      icon: "fa-solid fa-house",
+      action: () => navigate("/dashboard"),
+      active: true,
     },
     {
-      title: "My Donations",
-      description: "View the donations you have created.",
+      label: user.role === "donor" ? "Food Donations" : "Available Donations",
+      icon: user.role === "donor" ? "fa-solid fa-utensils" : "fa-solid fa-bell",
+      action: () =>
+        navigate(user.role === "donor" ? "/food-donations" : "/available-donations"),
+    },
+    {
+      label: "My Activities",
+      icon: "fa-solid fa-list-check",
       action: () => navigate("/my-activities"),
     },
     {
+      label: "Profile",
+      icon: "fa-solid fa-user",
+      action: () => navigate("/profile"),
+    },
+  ];
+
+  const actionCards = [
+    {
+      title: user.role === "donor" ? "Donate Food" : "Available Donations",
+      description:
+        user.role === "donor"
+          ? "Share surplus food with people who need it."
+          : "Browse available food donations ready for pickup.",
+      icon: "fa-solid fa-leaf",
+      action: () =>
+        navigate(user.role === "donor" ? "/food-donations" : "/available-donations"),
+    },
+    {
       title: "My Activities",
-      description: "Track your donation activity.",
+      description: "Track your donation work and activity history.",
+      icon: "fa-solid fa-chart-line",
       action: () => navigate("/my-activities"),
     },
     {
       title: "Profile",
-      description: "Manage your account details.",
+      description: "Update your information and account settings.",
+      icon: "fa-solid fa-id-badge",
       action: () => navigate("/profile"),
     },
     {
-      title: "Logout",
-      description: "Sign out from your account.",
-      action: handleLogout,
-    },
-  ];
-
-  const volunteerCards = [
-    {
-      title: "Available Donations",
-      description: "Browse available food donations.",
-      action: () => navigate("/available-donations"),
-    },
-    {
-      title: "My Activities",
-      description: "See accepted donations.",
+      title: "Community",
+      description: "Stay connected with the FoodBridge community.",
+      icon: "fa-solid fa-people-group",
       action: () => navigate("/my-activities"),
     },
     {
-      title: "Profile",
-      description: "Manage your account details.",
+      title: "Messages",
+      description: "Review announcements and next steps.",
+      icon: "fa-solid fa-envelope",
       action: () => navigate("/profile"),
     },
     {
       title: "Logout",
-      description: "Sign out from your account.",
-      action: handleLogout,
+      description: "Sign out and secure your account.",
+      icon: "fa-solid fa-right-from-bracket",
+      action: () => {
+        localStorage.removeItem("foodbridgeUser");
+        localStorage.removeItem("foodbridgeToken");
+        navigate("/login");
+      },
     },
   ];
-
-  const cards = user.role === "donor" ? donorCards : volunteerCards;
 
   return (
     <div className="dashboard-page">
-
-      {/* Sidebar */}
       <aside className="dashboard-sidebar">
-
-        <div className="dashboard-logo">
-          <div className="logo-icon">
+        <div className="dashboard-brand">
+          <div className="brand-icon">
             <i className="fa-solid fa-hand-holding-heart"></i>
           </div>
-
-          <div>
-            <h2>FoodBridge</h2>
-            <p>Connecting Food With Hope</p>
+          <div className="brand-text">
+            <h1>FoodBridge</h1>
+            <p>Connecting food with hope</p>
           </div>
         </div>
 
-        <nav className="dashboard-nav">
-
-          <button className="active">
-            <i className="fa-solid fa-house"></i>
-            Dashboard
-          </button>
-
-          {user.role === "donor" ? (
-            <button onClick={() => navigate("/food-donations")}> 
-              <i className="fa-solid fa-utensils"></i>
-              Food Donations
-            </button>
-          ) : (
-            <button onClick={() => navigate("/available-donations")}> 
-              <i className="fa-solid fa-bell"></i>
-              Available Donations
-            </button>
-          )}
-
-          <button onClick={() => navigate("/my-activities") }>
-            <i className="fa-solid fa-hand-holding-heart"></i>
-            My Activities
-          </button>
-
-          <button onClick={() => navigate("/profile") }>
+        <div className="dashboard-user-card">
+          <div className="user-avatar">
             <i className="fa-solid fa-user"></i>
-            Profile
-          </button>
+          </div>
+          <div className="user-meta">
+            <strong>{user.name}</strong>
+            <span>{user.email}</span>
+          </div>
+          <span className="role-badge">{user.role}</span>
+        </div>
 
+        <nav className="dashboard-nav">
+          {navItems.map((item) => (
+            <button
+              key={item.label}
+              type="button"
+              className={`dashboard-nav-item${item.active ? " active" : ""}`}
+              onClick={item.action}
+            >
+              <i className={item.icon}></i>
+              <span>{item.label}</span>
+            </button>
+          ))}
         </nav>
 
         <button
+          type="button"
           className="dashboard-logout"
-          onClick={handleLogout}
+          onClick={() => {
+            localStorage.removeItem("foodbridgeUser");
+            localStorage.removeItem("foodbridgeToken");
+            navigate("/login");
+          }}
         >
           <i className="fa-solid fa-right-from-bracket"></i>
-          Logout
+          Sign Out
         </button>
-
       </aside>
 
-      {/* Main Content */}
       <main className="dashboard-main">
-
-        {/* Topbar */}
         <header className="dashboard-topbar">
-
           <div>
-            <h1>Dashboard</h1>
+            <p className="topbar-label">Welcome back</p>
           </div>
-
-          <div className="dashboard-user">
-
-            <div className="user-avatar">
-              <i className="fa-solid fa-user"></i>
-            </div>
-
-            <div>
-              <strong>{user.name}</strong>
-              <span>{user.role}</span>
-            </div>
-
-            <div className="dashboard-corner-logo" aria-hidden>
-              <div className="logo-icon small">
-                <i className="fa-solid fa-hand-holding-heart"></i>
-              </div>
-            </div>
-
-          </div>
-
-
         </header>
 
-        {/* Welcome */}
-        <section className="welcome-card">
-
-          <div>
-            <h2>
-              Hello, {user.name} 👋
-            </h2>
-
+        <section className="welcome-banner">
+          <div className="welcome-copy">
+            <span className="eyebrow">Good day, {user.role}</span>
+            <h3>
+              Hello, {user.name} <span>👋</span>
+            </h3>
             <p>
-              Thank you for being part of FoodBridge.
-              Together we can connect surplus food with
-              people who need it.
+              You're doing great work with FoodBridge. Use this space to manage donations,
+              track activity, and keep your profile updated.
             </p>
           </div>
 
-          <i className="fa-solid fa-heart"></i>
-
+          <div className="welcome-metric">
+            <div className="metric-chip">
+              <div className="metric-icon">
+                <i className="fa-solid fa-heart"></i>
+              </div>
+              <div>
+                <p>Helping communities with every meal.</p>
+              </div>
+            </div>
+          </div>
         </section>
 
-        {/* Cards */}
-        <section className="dashboard-stats">
-          {cards.map((card) => (
-            <div key={card.title} className="stat-card" onClick={card.action} style={{ cursor: "pointer" }}>
-              <div className="stat-icon">
-                <i className="fa-solid fa-circle-check"></i>
+        <section className="feature-grid">
+          {actionCards.map((card) => (
+            <button
+              key={card.title}
+              type="button"
+              className="feature-card"
+              onClick={card.action}
+            >
+              <div className="card-icon">
+                <i className={card.icon}></i>
               </div>
-
               <div>
                 <h3>{card.title}</h3>
                 <p>{card.description}</p>
               </div>
-            </div>
+            </button>
           ))}
         </section>
 
-        {/* Account Information */}
-        <section className="account-section">
-
-          <h2>Account Information</h2>
+        <section className="account-panel">
+          <div className="panel-header">
+            <div>
+              <h3>Account information</h3>
+              <p>Here are your account details and current role settings.</p>
+            </div>
+          </div>
 
           <div className="account-card">
-
             <div className="account-row">
               <span>Name</span>
               <strong>{user.name}</strong>
             </div>
-
             <div className="account-row">
               <span>Email</span>
               <strong>{user.email}</strong>
             </div>
-
             <div className="account-row">
               <span>Role</span>
-              <strong className="role-badge">
-                {user.role}
-              </strong>
+              <strong>{user.role}</strong>
             </div>
-
           </div>
-
         </section>
-
       </main>
-
     </div>
   );
 }
