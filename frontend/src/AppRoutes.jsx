@@ -8,6 +8,7 @@ import FoodDonations from "./pages/FoodDonations";
 import MyActivities from "./pages/MyActivities";
 import AvailableDonations from "./pages/AvailableDonations";
 import Profile from "./pages/Profile";
+import Community from "./pages/Community";
 
 function AppRoutes() {
   return (
@@ -41,6 +42,10 @@ function AppRoutes() {
         <Route
           path="/my-activities"
           element={<MyActivities />}
+        />
+        <Route
+          path="/community"
+          element={<Community />}
         />
         <Route
           path="/available-donations"

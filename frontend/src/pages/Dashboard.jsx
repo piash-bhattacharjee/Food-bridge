@@ -67,13 +67,7 @@ function Dashboard() {
       title: "Community",
       description: "Stay connected with the FoodBridge community.",
       icon: "fa-solid fa-people-group",
-      action: () => navigate("/my-activities"),
-    },
-    {
-      title: "Messages",
-      description: "Review announcements and next steps.",
-      icon: "fa-solid fa-envelope",
-      action: () => navigate("/profile"),
+      action: () => navigate("/community"),
     },
     {
       title: "Logout",
@@ -100,7 +94,7 @@ function Dashboard() {
           </div>
         </div>
 
-        <div className="dashboard-user-card">
+        <div className="dashboard-user-card" onClick={() => navigate('/profile')} style={{ cursor: 'pointer' }}>
           <div className="user-avatar">
             <i className="fa-solid fa-user"></i>
           </div>

@@ -9,6 +9,8 @@ function MyActivities() {
   const [loading, setLoading] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [editValues, setEditValues] = useState({});
+  const isVolunteer = user?.role === "volunteer";
+  const isDonor = user?.role === "donor";
 
   useEffect(() => {
     if (!user) {
@@ -123,8 +125,12 @@ function MyActivities() {
                   <p style={{ margin: '6px 0' }}>{d.description}</p>
                   <small style={{ color: '#666' }}>Status: {d.status} • Created: {new Date(d.createdAt).toLocaleString()}</small>
                   <div style={{ marginTop: 8 }}>
-                    <button onClick={() => startEdit(d)} className="donation-submit" style={{ background:'#FF9800' }}>Edit</button>
-                    <button onClick={() => handleDelete(d._id)} style={{ marginLeft: 8 }}>Delete</button>
+                    {!isVolunteer && (
+                      <button onClick={() => startEdit(d)} className="donation-submit" style={{ background:'#FF9800' }}>Edit</button>
+                    )}
+                    {!isVolunteer && !isDonor && (
+                      <button onClick={() => handleDelete(d._id)} style={{ marginLeft: 8 }}>Delete</button>
+                    )}
                   </div>
                 </div>
               )}

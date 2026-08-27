@@ -55,6 +55,19 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// Get current profile (protected)
+router.get('/profile', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    res.json({ user });
+  } catch (err) {
+    console.error('Profile fetch error:', err.message);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // Update profile (protected)
 router.put('/profile', auth, async (req, res) => {
   try {
@@ -72,6 +85,18 @@ router.put('/profile', auth, async (req, res) => {
     res.json({ message: 'Profile updated', user: { id: user._id, name: user.name, email: user.email, role: user.role, phone: user.phone } });
   } catch (err) {
     console.error('Profile update error:', err.message);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Get all registered users (protected)
+router.get('/users', auth, async (req, res) => {
+  try {
+    // Return only the public fields needed by the community page
+    const users = await User.find({}, 'name email phone role').sort({ name: 1 });
+    res.json(users);
+  } catch (err) {
+    console.error('Error fetching users:', err.message);
     res.status(500).json({ message: 'Server error' });
   }
 });

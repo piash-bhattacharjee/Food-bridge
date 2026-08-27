@@ -41,6 +41,23 @@ body{
 
 }
 
+body:has(.hero){
+    position:relative;
+    isolation:isolate;
+}
+
+body:has(.hero)::before{
+    content:"";
+    position:absolute;
+    top:100vh;
+    right:0;
+    bottom:0;
+    left:0;
+    background:linear-gradient(180deg, rgba(216,255,240,.02), rgba(0,168,107,.08));
+    pointer-events:none;
+    z-index:-1;
+}
+
 /* ===========================================
    ANIMATED BACKGROUND
 =========================================== */
@@ -103,45 +120,39 @@ button{
 
 }
 
-.section-title{
-
+.feature-card{
+    background: rgba(255,255,255,0.06);
+    padding:40px 30px;
+    border-radius:22px;
     text-align:center;
-
-    margin-bottom:60px;
-
+    box-shadow:0 12px 30px rgba(2,6,23,0.12);
+    transition:.4s;
+    color: #ffffff;
+}
+.feature-card:hover{
+    transform:translateY(-12px);
+    background:#00A86B;
+    color: #ffffff;
 }
 
-.section-title span{
-
-    color:#00A86B;
-
-    font-weight:700;
-
-    letter-spacing:1px;
-
-    text-transform:uppercase;
-
+.feature-card i{
+    font-size:50px;
+    color: #ecfdf5;
 }
 
-.section-title h2{
-
-    font-size:42px;
-
-    margin-top:10px;
-
-    color:#222;
-
+.feature-card p {
+    margin: 8px 0 0;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.75;
+    font-size: 0.95rem;
 }
 
-.section-title p{
-
-    margin-top:15px;
-
-    color:#666;
-
-    font-size:17px;
-
+.feature-card h3{
+    margin-bottom:15px;
+    color:#ffffff;
+    transition:.4s;
 }
+    
 
 /* ===========================================
    NAVBAR
@@ -159,6 +170,8 @@ header{
 
     z-index:999;
 
+    background: transparent;
+
 }
 
 .navbar{
@@ -169,7 +182,7 @@ header{
 
     margin:0 auto;
 
-    padding:10px 40px;
+    padding:18px 40px;
 
     display:flex;
 
@@ -690,10 +703,16 @@ header{
 .donation-card{
     width:100%;
     max-width:760px;
-    background:rgba(255,255,255,0.95);
+    background: rgba(255,255,255,0.06);
     padding:36px;
     border-radius:16px;
-    box-shadow:0 18px 40px rgba(0,0,0,0.08);
+    box-shadow:0 18px 40px rgba(2,6,23,0.28);
+    border:1px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color:#ffffff;
+    position: relative;
+    z-index: 2;
 }
 
 .donation-header{
@@ -711,11 +730,12 @@ header{
 .donation-header h1{
     font-size:32px;
     margin:0;
+    color: #ffffff;
 }
 
 .donation-header p{
     margin:6px 0 0 44px;
-    color:#666;
+    color: rgba(255,255,255,0.9);
 }
 
 .donation-input{
@@ -734,9 +754,16 @@ header{
 .donation-input textarea{
     padding:10px 12px;
     border-radius:8px;
-    border:1px solid #e6e6e6;
+    border:1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.04);
+    color: #ffffff;
     font-size:14px;
     resize:vertical;
+}
+
+.donation-input option{
+    background:#ffffff;
+    color:#0f172a;
 }
 
 .donation-submit{
@@ -956,80 +983,12 @@ header{
 =========================================== */
 
 .feature-container{
-
     display:grid;
-
     grid-template-columns:repeat(3,1fr);
-
     gap:30px;
-
 }
 
-.feature-card{
 
-    background:#fff;
-
-    padding:40px 30px;
-
-    border-radius:22px;
-
-    text-align:center;
-
-    box-shadow:0 15px 35px rgba(0,0,0,.08);
-
-    transition:.4s;
-
-}
-
-.feature-card:hover{
-
-    transform:translateY(-12px);
-
-    background:#00A86B;
-
-}
-
-.feature-card:hover i,
-
-.feature-card:hover h3,
-
-.feature-card:hover p{
-
-    color:#fff;
-
-}
-
-.feature-card i{
-
-    font-size:50px;
-
-    color:#00A86B;
-
-    margin-bottom:22px;
-
-    transition:.4s;
-
-}
-
-.feature-card h3{
-
-    margin-bottom:15px;
-
-    color:#222;
-
-    transition:.4s;
-
-}
-
-.feature-card p{
-
-    color:#666;
-
-    line-height:28px;
-
-    transition:.4s;
-
-}
 
 /* ===========================================
    SECTION SPACING
@@ -2001,10 +1960,60 @@ section{
 
 }
 .dashboard-page {
-  min-height: 100vh;
-  display: flex;
-  background: #f8fafc;
-  color: #0f172a;
+    width: 100vw;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    background: linear-gradient(180deg, #e9fff5 0%, #f8fafc 100%);
+    color: #0f172a;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Also apply plain background to other dashboard pages (no image) */
+.donation-page {
+    width: 100vw;
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #e9fff5 0%, #f8fafc 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-page {
+    width: 100vw;
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #e9fff5 0%, #f8fafc 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Full-screen blurred background + dark overlay so cards (glass) sit on top */
+.dashboard-page::before,
+.donation-page::before,
+.profile-page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* richer, elegant teal/green gradient */
+    background: linear-gradient(135deg, #e6fff6 0%, #cff7ec 30%, #b6efe2 60%, #a9e9dd 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    filter: blur(8px) saturate(1.05);
+    transform: scale(1.02);
+    z-index: 0;
+}
+.dashboard-page::after,
+.donation-page::after,
+.profile-page::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* subtle dark tint to improve contrast while keeping color visible */
+    background: rgba(6, 38, 25, 0.12);
+    z-index: 1;
 }
 
 .dashboard-sidebar {
@@ -2016,6 +2025,45 @@ section{
   display: flex;
   flex-direction: column;
   gap: 30px;
+}
+
+/* Make all sidebar text and icons fully white for readability */
+.dashboard-sidebar,
+.dashboard-sidebar .dashboard-brand,
+.dashboard-sidebar .dashboard-user-card,
+.dashboard-sidebar .dashboard-nav,
+.dashboard-sidebar .dashboard-nav-item {
+    color: #ffffff;
+    position: relative;
+    z-index: 3;
+}
+.dashboard-sidebar .dashboard-brand h1,
+.dashboard-sidebar .dashboard-brand p {
+    color: #ffffff;
+}
+.dashboard-sidebar .dashboard-user-card .user-meta strong,
+.dashboard-sidebar .dashboard-user-card .user-meta span {
+    color: #000000;
+}
+.dashboard-sidebar .role-badge {
+    color: #000000;
+}
+.dashboard-sidebar .dashboard-nav-item i {
+    color: #ffffff;
+}
+.dashboard-sidebar .dashboard-nav-item {
+    text-shadow: 0 1px 2px rgba(0,0,0,0.55);
+}
+
+/* Ensure nav labels are white */
+.dashboard-sidebar .dashboard-nav-item span {
+    color: #ffffff;
+    font-weight:600;
+}
+
+/* Ensure logout button is visible */
+.dashboard-sidebar .dashboard-logout {
+    color: #ffffff;
 }
 
 .dashboard-brand {
@@ -2132,11 +2180,20 @@ section{
 }
 
 .dashboard-main {
-  flex: 1;
-  padding: 32px 42px;
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
+    flex: 1;
+    min-width: 0;
+    min-height: 100vh;
+    padding: 32px 42px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    color: #ffffff;
+    position: relative;
+    z-index: 2;
 }
 
 .dashboard-topbar {
@@ -2147,9 +2204,10 @@ section{
 }
 
 .topbar-label {
-  margin: 0;
-  color: #475569;
-  font-size: 0.95rem;
+    margin: 0;
+    color: #064e3b;
+    font-size: 0.95rem;
+    font-weight: 700;
 }
 
 .dashboard-topbar h2 {
@@ -2205,17 +2263,18 @@ section{
 }
 
 .welcome-banner {
-  position: relative;
-  overflow: hidden;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 28px;
-  padding: 32px;
-  display: grid;
-  grid-template-columns: 1.5fr 0.9fr;
-  gap: 28px;
-  align-items: center;
-  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
+    position: relative;
+    overflow: hidden;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 28px;
+    padding: 32px;
+    display: grid;
+    grid-template-columns: 1.5fr 0.9fr;
+    gap: 28px;
+    align-items: center;
+    box-shadow: 0 16px 40px rgba(2,6,23,0.12);
+    color: #ffffff;
 }
 
 .welcome-banner::before {
@@ -2228,21 +2287,22 @@ section{
 }
 
 .welcome-copy {
-  position: relative;
-  z-index: 1;
+    margin: 18px 0 0;
+    color: #ffffff;
+    font-weight: 800;
 }
 
 .eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
-  border-radius: 999px;
-  background: #ecfdf5;
-  color: #166534;
-  font-size: 0.82rem;
-  font-weight: 600;
-  margin-bottom: 16px;
+display: inline-flex;
+align-items: center;
+gap: 8px;
+padding: 6px 12px;
+border-radius: 999px;
+background: #ecfdf5;
+color: #000000;
+font-size: 0.82rem;
+font-weight: 600;
+margin-bottom: 16px;
 }
 
 .welcome-copy h3 {
@@ -2252,23 +2312,23 @@ section{
 }
 
 .welcome-copy p {
-  margin: 18px 0 0;
-  color: #475569;
-  font-size: 1rem;
-  max-width: 560px;
-  line-height: 1.75;
+margin: 18px 0 0;
+color: rgba(255,255,255,0.92);
+font-size: 1rem;
+max-width: 560px;
+line-height: 1.75;
 }
 
 .welcome-metric {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 160px;
-  background: #f0fdf4;
-  border-radius: 24px;
-  padding: 24px;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 160px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 24px;
+    padding: 24px;
 }
 
 .metric-chip {
@@ -2291,8 +2351,8 @@ section{
 }
 
 .metric-chip p {
-  margin: 0;
-  color: #14532d;
+    margin: 0;
+    color: #e6fff3;
   font-size: 1rem;
   font-weight: 600;
 }
@@ -2304,47 +2364,50 @@ section{
 }
 
 .feature-card {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 22px;
-  padding: 26px;
-  display: flex;
-  align-items: flex-start;
-  gap: 18px;
-  cursor: pointer;
-  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
-  text-align: left;
+        background: rgba(255, 255, 255, 0.92);
+        border: 1px solid rgba(6, 78, 59, 0.06);
+        border-radius: 22px;
+        padding: 26px;
+        display: flex;
+        align-items: flex-start;
+        gap: 18px;
+        cursor: pointer;
+        transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+        text-align: left;
+        color: #064e3b;
+        box-shadow: 0 8px 20px rgba(6,78,59,0.06);
 }
 
 .feature-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 22px 50px rgba(15, 23, 42, 0.08);
-  border-color: #d1d5db;
+    transform: translateY(-4px);
+    box-shadow: 0 28px 60px rgba(6,78,59,0.12);
+    border-color: rgba(6,78,59,0.12);
 }
 
 .card-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 18px;
-  background: #ecfdf5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #166534;
-  font-size: 20px;
-  flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(16,185,129,0.12);
+    color: #10b981;
+    font-size: 20px;
+    flex-shrink: 0;
 }
 
 .feature-card h3 {
-  margin: 0;
-  font-size: 1.05rem;
+    margin: 0;
+    font-size: 1.05rem;
+    color: #064e3b;
 }
 
 .feature-card p {
-  margin: 8px 0 0;
-  color: #475569;
-  line-height: 1.75;
-  font-size: 0.95rem;
+    margin: 8px 0 0;
+    color: rgba(6,78,59,0.85);
+    line-height: 1.6;
+    font-size: 0.95rem;
 }
 
 .account-panel {
@@ -2367,18 +2430,58 @@ section{
 
 .panel-header p {
   margin: 6px 0 0;
-  color: #64748b;
+    color: rgba(255,255,255,0.9);
   font-size: 0.95rem;
   max-width: 560px;
 }
 
 .account-card {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 22px;
-  padding: 24px;
-  display: grid;
-  gap: 18px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 22px;
+    padding: 24px;
+    display: grid;
+    gap: 18px;
+    color: #ffffff;
+    position: relative;
+    z-index: 3;
+}
+
+/* Profile card glass style */
+.profile-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    box-shadow: 0 18px 40px rgba(2,6,23,0.25);
+    padding: 28px;
+    color: #ffffff;
+    position: relative;
+    z-index: 3;
+}
+
+.profile-card h2,
+.profile-card label,
+.profile-card strong,
+.profile-card p,
+.profile-card span {
+    color: #ffffff;
+}
+
+.profile-card input,
+.profile-card select,
+.profile-card textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.04);
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.profile-card input::placeholder,
+.profile-card textarea::placeholder {
+    color: rgba(255,255,255,0.7);
 }
 
 .account-row {
@@ -2395,12 +2498,12 @@ section{
 }
 
 .account-row span {
-  color: #64748b;
-  font-size: 0.95rem;
+        color: rgba(255,255,255,0.9);
+    font-size: 0.95rem;
 }
 
 .account-row strong {
-  color: #0f172a;
+    color: #ffffff;
 }
 
 @media (max-width: 1100px) {
@@ -2466,7 +2569,9 @@ section{
     padding: 24px;
   }
 
-  .feature-card {
-    padding: 20px;
-  }
+}
+
+.feature-card i{
+    font-size:50px;
+    color: #10b981;
 }

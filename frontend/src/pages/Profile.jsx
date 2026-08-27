@@ -4,37 +4,120 @@ import API from "../api";
 
 function Profile() {
   const navigate = useNavigate();
-  const stored = JSON.parse(localStorage.getItem("foodbridgeUser"));
+
+  const storedUser = (() => {
+    try {
+      const stored = localStorage.getItem("foodbridgeUser");
+      return stored ? JSON.parse(stored) : null;
+    } catch {
+      return null;
+    }
+  })();
+
+  const [user, setUser] = useState(storedUser);
+  const [name, setName] = useState(storedUser?.name || "");
+  const [email, setEmail] = useState(storedUser?.email || "");
+  const [phone, setPhone] = useState(storedUser?.phone || "");
+  const [role, setRole] = useState(storedUser?.role || "");
+  const [loading, setLoading] = useState(false);
+  const [profileLoading, setProfileLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    if (!stored) {
-      navigate("/login");
-    }
-  }, [navigate, stored]);
-  const [name, setName] = useState(stored?.name || "");
-  const [email] = useState(stored?.email || "");
-  const [phone, setPhone] = useState(stored?.phone || "");
-  const [loading, setLoading] = useState(false);
+    const token = localStorage.getItem("foodbridgeToken");
 
-  if (!stored) return null;
+    if (!token) {
+      setProfileLoading(false);
+      setErrorMessage("Please log in to view your profile.");
+      return;
+    }
+
+    const fetchProfile = async () => {
+      setProfileLoading(true);
+
+      try {
+        const res = await fetch(`${API}/api/auth/profile`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          setErrorMessage(data.message || "Unable to load profile.");
+          console.error("Unable to load profile:", res.status, data);
+          return;
+        }
+
+        const profile = data.user;
+
+        if (!profile) {
+          setErrorMessage("Profile data is missing.");
+          return;
+        }
+
+        // Set current logged-in user's information
+        setUser(profile);
+        setName(profile.name || "");
+        setEmail(profile.email || "");
+        setPhone(profile.phone || "");
+        setRole(profile.role || "");
+
+        // Keep localStorage synchronized with backend data
+        localStorage.setItem("foodbridgeUser", JSON.stringify(profile));
+      } catch (error) {
+        console.error("Profile fetch error:", error);
+        setErrorMessage("Profile fetch error: " + error.message);
+      } finally {
+        setProfileLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, []);
 
   const handleSave = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     try {
       const token = localStorage.getItem("foodbridgeToken");
-        const res = await fetch(`${API}/api/auth/profile`, {
+
+      const res = await fetch(`${API}/api/auth/profile`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json", ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
         body: JSON.stringify({ name, phone }),
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Update failed");
 
-      // update localStorage
-      const updatedUser = { ...stored, name: data.user.name, phone: data.user.phone };
-      localStorage.setItem("foodbridgeUser", JSON.stringify(updatedUser));
+      if (!res.ok) {
+        throw new Error(data.message || "Update failed");
+      }
+
+      const updatedUser = {
+        ...user,
+        name: data.user.name,
+        phone: data.user.phone,
+        email: data.user.email,
+        role: data.user.role,
+      };
+
+      localStorage.setItem(
+        "foodbridgeUser",
+        JSON.stringify(updatedUser)
+      );
+
+      setUser(updatedUser);
+      setName(data.user.name);
+      setEmail(data.user.email);
+      setPhone(data.user.phone);
+      setRole(data.user.role);
 
       alert("Profile updated successfully");
       navigate("/dashboard");
@@ -46,28 +129,50 @@ function Profile() {
     }
   };
 
+  // Prefer fetched `user` but fall back to `storedUser` so the card appears immediately after navigation.
+  const displayUser = user || storedUser || {};
+  const displayName = name || displayUser.name || "";
+  const displayEmail = email || displayUser.email || "";
+  const displayPhone = phone || displayUser.phone || "";
+  const displayRole = role || displayUser.role || "";
+
+  if (profileLoading && !displayEmail) {
+    return (
+      <section className="profile-page" style={{ paddingTop: 140 }}>
+        <div className="profile-card" style={{ width: "90%", maxWidth: 760, margin: "0 auto" }}>
+          <h2 style={{ fontWeight: 700, marginBottom: 20 }}>Profile</h2>
+          <p style={{ fontWeight: 700, fontSize: 16 }}>Loading profile...</p>
+        </div>
+      </section>
+    );
+  }
+
   return (
-    <section style={{ paddingTop: 140 }}>
-      <div style={{ width: '90%', maxWidth: 760, margin: '0 auto', background: 'white', padding: 28, borderRadius: 12 }}>
-        <h2>Profile</h2>
-        <form onSubmit={handleSave}>
-          <div style={{ marginBottom: 12 }}>
-            <label style={{ display: 'block', marginBottom: 6 }}>Full Name</label>
-            <input value={name} onChange={(e) => setName(e.target.value)} style={{ width: '100%', padding: 10, borderRadius:8, border: '1px solid #e6e6e6' }} />
+    <section className="profile-page" style={{ paddingTop: 140 }}>
+      <div className="profile-card" style={{ width: "90%", maxWidth: 760, margin: "0 auto" }}>
+        <h2 style={{ fontWeight: 700, marginBottom: 20 }}>Profile</h2>
+
+        <div className="account-card">
+          <div className="account-row">
+            <span>Name</span>
+            <strong>{displayName || '-'}</strong>
           </div>
 
-          <div style={{ marginBottom: 12 }}>
-            <label style={{ display: 'block', marginBottom: 6 }}>Email</label>
-            <input value={email} readOnly style={{ width: '100%', padding: 10, borderRadius:8, border: '1px solid #e6e6e6', background:'#f5f5f5' }} />
+          <div className="account-row">
+            <span>Email</span>
+            <strong>{displayEmail || '-'}</strong>
           </div>
 
-          <div style={{ marginBottom: 12 }}>
-            <label style={{ display: 'block', marginBottom: 6 }}>Phone</label>
-            <input value={phone} onChange={(e) => setPhone(e.target.value)} style={{ width: '100%', padding: 10, borderRadius:8, border: '1px solid #e6e6e6' }} />
+          <div className="account-row">
+            <span>Phone</span>
+            <strong>{displayPhone || '-'}</strong>
           </div>
 
-          <button className="donation-submit" type="submit" disabled={loading}>{loading ? 'Saving...' : 'Save Profile'}</button>
-        </form>
+          <div className="account-row">
+            <span>Role</span>
+            <strong style={{ textTransform: 'capitalize' }}>{displayRole || '-'}</strong>
+          </div>
+        </div>
       </div>
     </section>
   );
