@@ -1,8 +1,27 @@
+import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 
 const ASSET_BASE = import.meta.env.VITE_ASSET_BASE ?? "";
 
 function Home() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1200);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="initial-loader-screen">
+        <div className="loader">
+          <span className="loader-spinner"></span>
+          <span>Loading...</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <Navbar />

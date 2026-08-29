@@ -80,10 +80,10 @@ function AvailableDonations() {
         ) : (
           donations.map((donation) => (
             <div key={donation._id} style={{ borderBottom: '1px solid #eee', padding: '18px 0' }}>
-              <h3 style={{ margin: 0 }}>{donation.foodName} <small style={{ color: '#666', marginLeft: 8 }}>{donation.quantity}</small></h3>
-              <p style={{ margin: '6px 0' }}>{donation.foodType} • {donation.pickupLocation}</p>
-              <p style={{ margin: '6px 0' }}>{donation.description}</p>
-              <p style={{ margin: '6px 0', color: '#777' }}>Donor: {donation.donorName}</p>
+              <h3 style={{ margin: 0, color: '#111827' }}>{donation.foodName} <small style={{ color: '#374151', marginLeft: 8 }}>{donation.quantity}</small></h3>
+              <p style={{ margin: '6px 0', color: '#111827' }}>{donation.foodType} • {donation.pickupLocation}</p>
+              <p style={{ margin: '6px 0', color: '#111827' }}>{donation.description}</p>
+              <p style={{ margin: '6px 0', color: '#374151' }}>Donor: {donation.donorName}</p>
               <button className="donation-submit" onClick={() => handleClaim(donation._id)}>
                 Claim Donation
               </button>

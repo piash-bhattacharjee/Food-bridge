@@ -12,6 +12,14 @@ function MyActivities() {
   const isVolunteer = user?.role === "volunteer";
   const isDonor = user?.role === "donor";
 
+  const canEditDonation = (donation) => {
+    return isDonor && donation?.donorEmail === user?.email;
+  };
+
+  const canDeleteDonation = (donation) => {
+    return isDonor && donation?.donorEmail === user?.email && donation?.status === "Available";
+  };
+
   useEffect(() => {
     if (!user) {
       navigate("/login");
@@ -120,15 +128,15 @@ function MyActivities() {
                 </div>
               ) : (
                 <div>
-                  <h3 style={{ margin: 0 }}>{d.foodName} <small style={{ color: '#666', marginLeft: 8 }}>{d.quantity}</small></h3>
-                  <p style={{ margin: '6px 0' }}>{d.foodType} • {d.pickupLocation}</p>
-                  <p style={{ margin: '6px 0' }}>{d.description}</p>
-                  <small style={{ color: '#666' }}>Status: {d.status} • Created: {new Date(d.createdAt).toLocaleString()}</small>
+                  <h3 style={{ margin: 0, color: '#111827' }}>{d.foodName} <small style={{ color: '#374151', marginLeft: 8 }}>{d.quantity}</small></h3>
+                  <p style={{ margin: '6px 0', color: '#111827' }}>{d.foodType} • {d.pickupLocation}</p>
+                  <p style={{ margin: '6px 0', color: '#111827' }}>{d.description}</p>
+                  <small style={{ color: '#374151' }}>Status: {d.status} • Created: {new Date(d.createdAt).toLocaleString()}</small>
                   <div style={{ marginTop: 8 }}>
-                    {!isVolunteer && (
+                    {canEditDonation(d) && (
                       <button onClick={() => startEdit(d)} className="donation-submit" style={{ background:'#FF9800' }}>Edit</button>
                     )}
-                    {!isVolunteer && !isDonor && (
+                    {canDeleteDonation(d) && (
                       <button onClick={() => handleDelete(d._id)} style={{ marginLeft: 8 }}>Delete</button>
                     )}
                   </div>

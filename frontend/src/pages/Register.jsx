@@ -11,13 +11,16 @@ function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [role, setRole] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     // Check password match
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
+      setLoading(false);
       return;
     }
 
@@ -54,6 +57,8 @@ function Register() {
     } catch (error) {
       console.error("Registration Error:", error);
       alert("Server connection failed: " + error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -247,8 +252,16 @@ function Register() {
           <button
             type="submit"
             className="register-btn"
+            disabled={loading}
           >
-            Create Account
+            {loading ? (
+              <span className="loader">
+                <span className="loader-spinner"></span>
+                Loading...
+              </span>
+            ) : (
+              "Create Account"
+            )}
           </button>
 
         </form>

@@ -50,9 +50,9 @@ function Community() {
           <div style={{ display: 'grid', gap: 12 }}>
             {users.map((u) => (
               <div key={u._id} style={{ borderBottom: '1px solid #eee', padding: '12px 0' }}>
-                <h3 style={{ margin: 0 }}>{u.name} <small style={{ color: '#666', marginLeft: 8 }}>{u.role}</small></h3>
-                <p style={{ margin: '6px 0' }}><strong>Email:</strong> {u.email}</p>
-                <p style={{ margin: '6px 0' }}><strong>Phone:</strong> {u.phone || '—'}</p>
+                <h3 style={{ margin: 0, color: '#111827' }}>{u.name} <small style={{ color: '#374151', marginLeft: 8 }}>{u.role}</small></h3>
+                <p style={{ margin: '6px 0', color: '#111827' }}><strong style={{ color: '#111827' }}>Email:</strong> {u.email}</p>
+                <p style={{ margin: '6px 0', color: '#111827' }}><strong style={{ color: '#111827' }}>Phone:</strong> {u.phone || '—'}</p>
               </div>
             ))}
           </div>

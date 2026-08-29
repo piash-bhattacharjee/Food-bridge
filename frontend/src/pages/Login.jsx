@@ -7,9 +7,11 @@ function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const response = await fetch(`${API}/api/auth/login`, {
@@ -40,6 +42,8 @@ function Login() {
     } catch (error) {
       console.error("Login Error:", error);
       alert("Server connection failed: " + error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -140,8 +144,16 @@ function Login() {
           <button
             type="submit"
             className="login-btn"
+            disabled={loading}
           >
-            Login
+            {loading ? (
+              <span className="loader">
+                <span className="loader-spinner"></span>
+                Loading...
+              </span>
+            ) : (
+              "Login"
+            )}
           </button>
 
         </form>
