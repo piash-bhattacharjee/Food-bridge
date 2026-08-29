@@ -91,12 +91,12 @@ body{
 .logo-icon i{
 
     font-size:40px;
-    color:#ffffff;
+    color:#000000;
 
 }
 
 .login-card .logo h2{
-    color:#fff;
+    color:#000000;
     font-size:34px;
     font-weight:700;
 }
@@ -120,7 +120,7 @@ body{
     left:18px;
     top:50%;
     transform:translateY(-50%);
-    color:#ffffff;
+    color:#000000;
     font-size:17px;
 }
 
@@ -133,7 +133,7 @@ body{
     padding-left:50px;
 padding-right:55px;
     background:rgba(255,255,255,.18);
-    color:#fff;
+    color:#000000;
     font-size:15px;
     transition:.3s;
 }
@@ -152,14 +152,14 @@ padding-right:55px;
     right:18px;
     top:50%;
     transform:translateY(-50%);
-    color:#fff;
+    color:#000000;
     cursor:pointer;
     font-size:17px;
 }
 .toggle-password i{
     position:static;
     transform:none;
-    color:#fff;
+    color:#000000;
     font-size:17px;
 }
 /* ===========================================
@@ -171,7 +171,7 @@ padding-right:55px;
     justify-content:space-between;
     align-items:center;
     margin:20px 0 30px;
-    color:#fff;
+    color:#000000;
     font-size:14px;
 }
 
@@ -187,7 +187,7 @@ padding-right:55px;
 }
 
 .options a{
-    color:#ffffff;
+    color:#000000;
     text-decoration:none;
     transition:.3s;
 }
@@ -202,7 +202,7 @@ padding-right:55px;
     border:none;
     border-radius:12px;
     background:linear-gradient(135deg,#2ecc71,#27ae60);
-    color:#fff;
+    color:#000000;
     font-size:17px;
     font-weight:600;
     cursor:pointer;
@@ -224,7 +224,7 @@ padding-right:55px;
 }
 
 .bottom-links p{
-    color:#f1f1f1;
+    color:#000000;
     font-size:15px;
 }
 
@@ -244,7 +244,7 @@ padding-right:55px;
 }
 
 .back-home a{
-    color:#ffffff;
+    color:#000000;
     text-decoration:none;
     font-size:15px;
     transition:.3s;
